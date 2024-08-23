@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Khodam</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: radial-gradient(circle, #1b1b1b, #141414);
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(25, 25, 25, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            width: 380px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #ffcc29;
+            text-shadow: 3px 3px 10px rgba(255, 204, 41, 0.6);
+            letter-spacing: 2px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+            font-size: 16px;
+            outline: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        input::placeholder {
+            color: #bbb;
+        }
+
+        input:focus, select:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffcc29;
+            border: none;
+            border-radius: 5px;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+        }
+
+        .result {
+            margin-top: 30px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffcc29;
+            text-shadow: 2px 2px 5px rgba(255, 204, 41, 0.7);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background: linear-gradient(120deg, #ff0084, #33001b);
+            opacity: 0.6;
+            clip-path: circle(30% at 70% 70%);
+            animation: moveBackground 10s infinite alternate;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                clip-path: circle(30% at 70% 70%);
+            }
+            100% {
+                clip-path: circle(70% at 50% 50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <h1>Cek Khodam Anda</h1>
+        <form id="khodamForm">
+            <label for="name">Nama Anda:</label>
+            <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
+
+            <label for="gender">Jenis Kelamin:</label>
+            <select id="gender" name="gender">
+                <option value="male">Laki-laki</option>
+                <option value="female">Perempuan</option>
+            </select>
+
+            <button type="submit">Cek Khodam</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        document.getElementById('khodamForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const gender = document.getElementById('gender').value;
+
+            let khodamResult = calculateKhodam(name, gender);
+
+            document.getElementById('result').textContent = `Khodam Anda: ${khodamResult}`;
+        });
+
+        function calculateKhodam(name, gender) {
+            const khodamList = [
+                "Jin Pendamping", "Malaikat Pelindung", "Sosok Gaib", "Penjaga Alam", 
+                "Pohon Hikmah", "Angin Pencerah", "Bayangan Misterius", "Cahaya Kebenaran",
+                "Laptop Bijaksana", "Komputer Gaib", "Botol Energi", "Keyboard Suci",
+                "Batu Karang", "Pedang Terbang", "Mata Elang", "Api Biru",
+                "Singa Emas", "Naga Hitam", "Hujan Panas", "Kilat Merah",
+                "Satria Baja Hitam", "Dewi Sri", "Pandawa Lima", "Rama Shinta",
+                "Bayu Angkasa", "Roro Jonggrang", "Jaka Tarub", "Pangeran Diponegoro", "Sucipto", "Kacung Salto", "Jokowi", "Prabroro", "Ganjar Pekob", "Agus Minta Salim", "Ubi Jalar", "Ultraman Mullet", "Terkadang", "Botak Mullet", "Jam Dindingpun Tertawa"
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * khodamList.length);
+            
+            return khodamList[randomIndex];
+        }
+    </script>
+</body>
+</html>
