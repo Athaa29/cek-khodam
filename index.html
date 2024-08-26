@@ -120,6 +120,185 @@
 
     document.getElementById('khodamForm').addEventListener('submit', function(e) {
       e.preventDefault();
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Khodam</title>
+  <style>
+    /* CSS untuk tema dan animasi */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body.light-theme {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    body.dark-theme {
+      background-color: #333;
+      color: #f9f9f9;
+    }
+
+    /* Animasi latar belakang */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fcb69f, #ff6b6b);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #result {
+      font-size: 1.5em;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    #result.show {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    #historyList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #historyList li {
+      margin: 5px 0;
+    }
+
+    button, select {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    select {
+      margin-top: 10px;
+      padding: 5px;
+    }
+
+    form, h1, h3, #result, #historyList, select, button {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="container">
+    <h1>Cek Khodam</h1>
+    
+    <form id="khodamForm">
+      <label for="name">Masukkan Nama Anda:</label><br>
+      <input type="text" id="name" name="name" required oninput="checkName()"><br>
+      <button type="submit" id="submitBtn">Cek Khodam</button>
+    </form>
+
+    <h3>Riwayat Khodam:</h3>
+    <ul id="historyList"></ul>
+
+    <button id="resetHistory">Reset Riwayat</button>
+
+    <label for="theme">Pilih Tema Warna:</label>
+    <select id="theme">
+      <option value="light">Terang</option>
+      <option value="dark">Gelap</option>
+    </select>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Daftar nama Khodam
+    const khodamNames = [
+      "Jin Pendamping", "Malaikat Pelindung", "Sosok Gaib", "Penjaga Alam", 
+                "Pohon Hikmah", "Angin Pencerah", "Bayangan Misterius", "Cahaya Kebenaran",
+                "Laptop Bijaksana", "Komputer Gaib", "Botol Energi", "Keyboard Suci",
+                "Batu Karang", "Pedang Terbang", "Mata Elang", "Api Biru",
+                "Singa Emas", "Naga Hitam", "Hujan Panas", "Kilat Merah",
+                "Satria Baja Hitam", "Dewi Sri", "Pandawa Lima", "Rama Shinta",
+                "Bayu Angkasa", "Roro Jonggrang", "Jaka Tarub", "Pangeran Diponegoro", "Sucipto", 
+                "Kacung Salto", "Jokowi", "Prabroro", "Ganjar Pekob", "Agus Minta Salim", "Ubi Jalar", 
+                "Ultraman Mullet", "Terkadang", "Botak Mullet", "Jam Dindingpun Tertawa", "Jawa", 
+                "Skibidi", "Sigma", "Ponakan Zeus", "Kuda Poni"
+                ];
+
+    // Script untuk menyimpan dan menampilkan nama Khodam
+    let usedNames = JSON.parse(localStorage.getItem('usedNames')) || [];
+
+    // Fungsi untuk memilih nama Khodam secara acak
+    function getRandomKhodamName() {
+      const randomIndex = Math.floor(Math.random() * khodamNames.length);
+      return khodamNames[randomIndex];
+    }
+
+    // Fungsi untuk menampilkan nama Khodam dengan animasi
+    function showResult(name) {
+      let resultDiv = document.getElementById('result');
+      let khodamName = getRandomKhodamName();
+      resultDiv.innerText = `Nama Khodam untuk ${name} adalah: ${khodamName}`;
+      resultDiv.classList.add('show');
+
+      // Hapus kelas animasi setelah animasi selesai
+      setTimeout(() => resultDiv.classList.remove('show'), 2000);
+    }
+
+    // Fungsi untuk memeriksa nama dan menonaktifkan tombol jika nama sudah digunakan
+    function checkName() {
+      const nameInput = document.getElementById('name').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (usedNames.includes(nameInput.toLowerCase())) {
+        submitBtn.disabled = true;
+        submitBtn.title = 'Nama ini sudah digunakan. Silakan masukkan nama yang berbeda.';
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.title = '';
+      }
+    }
+
+    // Menangani form submit
+    document.getElementById('khodamForm').addEventListener('submit', function(e) {
+      e.preventDefault();
 
       let nameInput = document.getElementById('name').value.trim();
 
@@ -133,6 +312,7 @@
 
         showResult(nameInput);
 
+        // Tambahkan Khodam ke history list
         let historyList = document.getElementById('historyList');
         let listItem = document.createElement('li');
         listItem.innerText = `Nama Khodam untuk ${nameInput} adalah: ${getRandomKhodamName()}`;
@@ -143,6 +323,7 @@
       checkName();
     });
 
+    // Menampilkan Khodam yang tersimpan saat page load
     window.onload = function() {
       let historyList = document.getElementById('historyList');
       usedNames.forEach(function(name) {
@@ -150,18 +331,21 @@
         listItem.innerText = `Nama Khodam untuk ${name} adalah: ${getRandomKhodamName()}`;
         historyList.appendChild(listItem);
       });
-      
+
+      // Set tema saat page load
       let savedTheme = localStorage.getItem('theme') || 'light';
       document.body.className = savedTheme + '-theme';
       document.getElementById('theme').value = savedTheme;
     };
 
+    // Menangani pemilihan tema
     document.getElementById('theme').addEventListener('change', function() {
       let selectedTheme = this.value;
       document.body.className = selectedTheme + '-theme';
       localStorage.setItem('theme', selectedTheme);
     });
 
+    // Menangani tombol reset riwayat
     document.getElementById('resetHistory').addEventListener('click', function() {
       localStorage.removeItem('usedNames');
       usedNames = [];
