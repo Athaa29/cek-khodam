@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cek Khodam</title>
   <style>
-    /* CSS untuk tema dan animasi */
     body.light-theme {
       background-color: #f9f9f9;
       color: #333;
@@ -37,11 +36,15 @@
       margin: 5px 0;
     }
 
-    /* Styling untuk tombol dan elemen tambahan */
-    button {
+     button {
       margin: 5px 0;
       padding: 10px;
       cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
     }
 
     select {
@@ -55,8 +58,8 @@
   
   <form id="khodamForm">
     <label for="name">Masukkan Nama Anda:</label><br>
-    <input type="text" id="name" name="name" required><br>
-    <button type="submit">Cek Khodam</button>
+    <input type="text" id="name" name="name" required oninput="checkName()"><br>
+    <button type="submit" id="submitBtn">Cek Khodam</button>
   </form>
 
   <h3>Riwayat Khodam:</h3>
@@ -83,7 +86,7 @@
                 "Bayu Angkasa", "Roro Jonggrang", "Jaka Tarub", "Pangeran Diponegoro", "Sucipto", 
                 "Kacung Salto", "Jokowi", "Prabroro", "Ganjar Pekob", "Agus Minta Salim", "Ubi Jalar", 
                 "Ultraman Mullet", "Terkadang", "Botak Mullet", "Jam Dindingpun Tertawa", "Jawa", "Skibidi",
-                "Sigma", "Kosong", "Windah Batubara"
+                "Sigma", "Kosong", "Windah Batubara", "Ponakan Zeus"
             ];
 
     let usedNames = JSON.parse(localStorage.getItem('usedNames')) || [];
@@ -99,8 +102,20 @@
       resultDiv.innerText = `Nama Khodam untuk ${name} adalah: ${khodamName}`;
       resultDiv.classList.add('show');
 
-      
       setTimeout(() => resultDiv.classList.remove('show'), 2000);
+    }
+
+    function checkName() {
+      const nameInput = document.getElementById('name').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (usedNames.includes(nameInput.toLowerCase())) {
+        submitBtn.disabled = true;
+        submitBtn.title = 'Nama ini sudah digunakan. Silakan masukkan nama yang berbeda.';
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.title = '';
+      }
     }
 
     document.getElementById('khodamForm').addEventListener('submit', function(e) {
@@ -125,6 +140,7 @@
       }
 
       document.getElementById('khodamForm').reset();
+      checkName();
     });
 
     window.onload = function() {
@@ -134,20 +150,18 @@
         listItem.innerText = `Nama Khodam untuk ${name} adalah: ${getRandomKhodamName()}`;
         historyList.appendChild(listItem);
       });
-
+      
       let savedTheme = localStorage.getItem('theme') || 'light';
       document.body.className = savedTheme + '-theme';
       document.getElementById('theme').value = savedTheme;
     };
 
-    // Menangani pemilihan tema
     document.getElementById('theme').addEventListener('change', function() {
       let selectedTheme = this.value;
       document.body.className = selectedTheme + '-theme';
       localStorage.setItem('theme', selectedTheme);
     });
 
-    // Menangani tombol reset riwayat
     document.getElementById('resetHistory').addEventListener('click', function() {
       localStorage.removeItem('usedNames');
       usedNames = [];
