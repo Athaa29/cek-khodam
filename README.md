@@ -29,7 +29,7 @@ Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
    ```bash
    cd repository-cek-khodam
 
-3.Jalankan proyek dengan membuka file index.html di browser Anda.
+3. Jalankan proyek dengan membuka file index.html di browser Anda.
 
 ## Lisensi
  Proyek ini dilisensikan di bawah lisensi MIT. Silakan lihat file LICENSE untuk informasi lebih lanjut.
