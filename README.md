@@ -6,11 +6,8 @@ Proyek **Cek Khodam** adalah sebuah website interaktif yang memungkinkan penggun
 
 1. [Fitur](#fitur)
 2. [Instalasi](#instalasi)
-3. [Cara Penggunaan](#cara-penggunaan)
-4. [Struktur Folder](#struktur-folder)
-5. [Kontribusi](#kontribusi)
-6. [Lisensi](#lisensi)
-7. [Kontak](#kontak)
+3. [Lisensi](#lisensi)
+4. [Kontak](#kontak)
 
 ## Fitur
 
@@ -33,3 +30,9 @@ Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
    cd repository-cek-khodam
 
 3.Jalankan proyek dengan membuka file index.html di browser Anda.
+
+## Lisensi
+ Proyek ini dilisensikan di bawah lisensi MIT. Silakan lihat file LICENSE untuk informasi lebih lanjut.
+
+## Kontak
+Jika Anda memiliki pertanyaan atau ingin memberikan masukan, silakan hubungi saya lewat Instagram saya @crovvley29
