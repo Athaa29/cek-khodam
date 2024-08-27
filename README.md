@@ -1,8 +1,35 @@
-Cek Khodam adalah aplikasi web sederhana yang dirancang untuk membantu pengguna mengetahui "Khodam" mereka, yaitu entitas spiritual mistis yang dipercaya mendampingi dan membimbing individu. Dengan memasukkan informasi dasar seperti nama dan jenis kelamin, aplikasi ini akan secara acak menghasilkan nama Khodam dari berbagai daftar yang mencakup karakter mistis, objek sehari-hari, dan konsep budaya lainnya. Desain aplikasi ini modern dan dinamis, dilengkapi dengan animasi serta elemen interaktif untuk meningkatkan pengalaman pengguna.
+# Cek Khodam
 
-Fitur
+Proyek **Cek Khodam** adalah sebuah website interaktif yang memungkinkan pengguna untuk mengetahui khodam yang mendampingi mereka berdasarkan nama dan jenis kelamin yang diinput. Website ini menampilkan hasil khodam dengan animasi yang menarik dan dilengkapi dengan pilihan tema.
 
-    • Generator Khodam Acak: Menghasilkan nama Khodam secara acak berdasarkan input pengguna.
-    • Desain Responsif: Tampilan aplikasi dirancang agar responsif dan kompatibel dengan berbagai ukuran layar dan perangkat.
-    • Antarmuka Interaktif: Dilengkapi dengan animasi halus dan layout yang stylish untuk memberikan pengalaman pengguna yang menarik dan intuitif.
-    • Kode Sumber Terbuka: Kode aplikasi tersedia secara terbuka di GitHub, memungkinkan kontribusi dan modifikasi oleh siapa saja.
+## Daftar Isi
+
+1. [Fitur](#fitur)
+2. [Instalasi](#instalasi)
+3. [Cara Penggunaan](#cara-penggunaan)
+4. [Struktur Folder](#struktur-folder)
+5. [Kontribusi](#kontribusi)
+6. [Lisensi](#lisensi)
+7. [Kontak](#kontak)
+
+## Fitur
+
+- [x] **Pengecekan Khodam:** Masukkan nama dan jenis kelamin untuk mengetahui khodam Anda.
+- [x] **Animasi Hasil:** Hasil pengecekan khodam disertai dengan animasi yang menarik.
+- [x] **Pilihan Tema:** Tersedia beberapa tema tampilan untuk meningkatkan pengalaman pengguna.
+- [x] **Validasi Input:** Mencegah pengguna menggunakan nama yang sama lebih dari satu kali.
+- [x] **Desain Responsif:** Tampilan website yang menarik dan kompatibel dengan berbagai ukuran layar.
+
+## Instalasi
+
+Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
+
+1. Clone repository ini:
+   ```bash
+   git clone https://github.com/Athaa29/repository-cek-khodam.git
+
+2. Pindah ke file projek
+   ```bash
+   cd repository-cek-khodam
+
+3.Jalankan proyek dengan membuka file index.html di browser Anda.
