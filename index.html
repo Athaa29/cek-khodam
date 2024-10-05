@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Khodam</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: radial-gradient(circle, #1b1b1b, #141414);
             color: #eee;
             display: flex;
@@ -26,6 +28,11 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
         }
 
         h1 {
@@ -87,18 +94,6 @@
             transform: translateY(-3px);
         }
 
-        .result {
-            margin-top: 30px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #ffcc29;
-            text-shadow: 2px 2px 5px rgba(255, 204, 41, 0.7);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
-
         .background-animation {
             position: absolute;
             top: 0;
@@ -120,6 +115,97 @@
                 clip-path: circle(70% at 50% 50%);
             }
         }
+
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .loading div {
+            width: 10px;
+            height: 10px;
+            background-color: #ffcc29;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        .loading div:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .loading div:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(25, 25, 25, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 204, 41, 0.3);
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .popup h2 {
+            color: #ffcc29;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup p {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .popup button {
+            background-color: #ffcc29;
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .popup button:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+
+        #resultPopup {
+            animation: fadeInScale 0.5s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -138,8 +224,25 @@
 
             <button type="submit">Cek Khodam</button>
         </form>
-        <div id="result" class="result"></div>
+        <div class="loading">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
+
+    <div id="errorPopup" class="popup">
+        <h2>Peringatan</h2>
+        <p>Nama sudah digunakan sebelumnya. Silakan gunakan nama yang berbeda.</p>
+        <button onclick="closePopup('errorPopup')">Tutup</button>
+    </div>
+
+    <div id="resultPopup" class="popup">
+        <h2>Hasil Cek Khodam</h2>
+        <p id="khodamResult"></p>
+        <button onclick="closePopup('resultPopup')">Tutup</button>
+    </div>
+
     <script>
         let previousNames = [];
 
@@ -150,38 +253,55 @@
             const gender = document.getElementById('gender').value;
 
             if (previousNames.includes(name.toLowerCase())) {
-                alert("Nama sudah digunakan sebelumnya. Silakan gunakan nama yang berbeda.");
+                showPopup('errorPopup');
                 return;
             }
 
-            let khodamResult = calculateKhodam(name, gender);
+            const loadingElement = document.querySelector('.loading');
 
-            previousNames.push(name.toLowerCase());
+            loadingElement.style.display = 'flex';
 
-            document.getElementById('result').textContent = `Khodam Anda: ${khodamResult}`;
+            setTimeout(() => {
+                let khodamResult = calculateKhodam(name, gender);
+
+                previousNames.push(name.toLowerCase());
+
+                loadingElement.style.display = 'none';
+                
+                document.getElementById('khodamResult').textContent = `Khodam untuk ${name} adalah: ${khodamResult}`;
+                showPopup('resultPopup');
+            }, 2000);
         });
 
         function calculateKhodam(name, gender) {
             const khodamList = [
-                "Jin Tomang", "Malaikat Pelindung", "Sosok Gaib", "Penjaga Alam", 
+                "Jin Tomang", "Malaikat Pelindung", "Sosok Gaib", "Penjaga Alam",
                 "Pohon Hikmah", "Angin Topan", "Bayangan Hytam", "Cahaya Kebenaran",
                 "Laptop Bijaksana", "Komputer Gaib", "Botol Energi", "Keyboard Suci",
                 "Batu Karang", "Pedang Terbang", "Mata Elang", "Api Biru",
                 "Singa Emas", "Naga Hitam", "Hujan Panas", "Kilat Merah",
                 "Satria Baja Hitam", "Dewi Sri", "Pandawa Lima", "Rama Shinta",
-                "Bayu Angkasa", "Roro Jonggrang", "Jaka Tarub", "Pangeran Diponegoro", "Sucipto", 
-                "Kacung Salto", "Jokowi", "Prabroro", "Ganjar Pekob", "Agus Minta Salim", "Ubi Jalar", 
-                "Ultraman Mullet", "Terkadang", "Botak Mullet", "Jam Dindingpun Tertawa", "Jawa", 
+                "Bayu Angkasa", "Roro Jonggrang", "Jaka Tarub", "Pangeran Diponegoro", "Sucipto",
+                "Kacung Salto", "Jokowi", "Prabroro", "Ganjar Pekob", "Agus Minta Salim", "Ubi Jalar",
+                "Ultraman Mullet", "Terkadang", "Botak Mullet", "Jam Dindingpun Tertawa", "Jawa",
                 "Skibidi", "Sigma", "Kuda Poni", "Bintang Skibidi", "Kopi Luwak", "Ponakan Zeus",
                 "Anomali Sumatra", "Kadal Mewing", "Kura-kura Ninja", "Sosok Hytam", "Pecel Lele",
                 "Naga Metal", "Cacing Buntung", "Charger Iphone", "Tuyul Mohawk", "Sandal Jepit",
                 "Ikan Kayang", "Singa Introvert", "Undur-Undur", "Joker", "Rawarontek", "Planet Jupiter",
                 "Jupiter Kopling", "Cicak Belanda", "Bebek Sumbing", "Monyet Mewing", "Kucing Birahi"
             ];
-            
+
             const randomIndex = Math.floor(Math.random() * khodamList.length);
-            
+
             return khodamList[randomIndex];
+        }
+
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
         }
     </script>
 </body>
